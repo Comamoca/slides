@@ -49,6 +49,8 @@
           self.marp-cli
           pkgs.google-chrome
           pkgs.jekyll
+        ];
+        nativeBuildInputs = [
           pkgs.noto-fonts-cjk-sans
         ];
         src = ./.;
