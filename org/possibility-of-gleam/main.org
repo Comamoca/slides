@@ -13,9 +13,14 @@
 ** 設定
 
 #+begin_src typst-ts :tangle ./main.typ 
-  #show: comamoca-theme.with(total-slides: 9, primary: unnamed-blue)
+  #show: comamoca-theme.with(
+      total-slides: 9,
+      primary: unnamed-blue,
+      config-common(show-notes-on-second-screen: right),
+  )
 
   #let icode(name) = text(fill: faff-pink, raw(block: false, name.text))
+  #let ref-url(url) = align(center)[#text("https://gleam.run/getting-started/installing/", 10pt)] 
 
   #let codelst-sourcecode = sourcecode
   #let sourcecode = codelst-sourcecode.with(
@@ -78,135 +83,174 @@
     #image("./images/icon.png", width: 20%)
     #text("\ Twitterから来ました! /")
   ]
+
+  #speaker-note[
+    + 懇親会でこのアイコンを見せるとTwitterで見たことあります！と言われる
+    + 出身は山梨で、今年就職と同時に上京してきた
+    + Gleamをかれこれ2年くらい追っている。
+  ]
 #+end_src
 
 #+begin_src typst-ts :tangle ./main.typ 
   #center-image("./images/gleam-reverse-lookup.png")
-  #center-image("./images/gleam-poem.png") 
-  #center-image("./images/gleam-articles-list.png") 
-  #center-image("./images/gleam-garnet.png") 
+  #speaker-note[+ 記事を書いたり]
 #+end_src
 
-Gleamを2年くらい追っている。
-色々ツールを作ったり記事を書いたりしている。
+#+begin_src typst-ts :tangle ./main.typ 
+  #center-image("./images/gleam-poem.png") 
+  #speaker-note[+ 記事を書いたり]
+#+end_src
+
+#+begin_src typst-ts :tangle ./main.typ 
+  #center-image("./images/gleam-articles-list.png") 
+  #speaker-note[+ 記事を書いたり]
+#+end_src
+
+#+begin_src typst-ts :tangle ./main.typ 
+  #center-image("./images/gleam-garnet.png") 
+  #speaker-note[
+    + ツールを作ったりしている。
+    + このリポジトリはJS Runtime経由でシングルバイナリを作成するツール
+    + esbuildを使ってバンドルしたものをシングルバイナリにしている
+  ]
+#+end_src
 
 ** 注意点
 
 #+begin_src typst-ts :tangle ./main.typ
   == 注意点
-  Gleam v1.11.0を前提にしています。 \
-  Gleam Playgroundは現時点でv1.11.0に対応していないため、一部構文はエラーになる可能性があります。
-  主に#icode[echo]キーワードなどが該当します。
-
-  また、 表示の都合上importなどを省略している箇所があります。
+  - 基本的にGleam v1.11.0を前提にしています。
+  - 表示の都合上importなどを省略している箇所があります。
 #+end_src
 
 ** Gleamとは
 
 #+begin_src typst-ts :tangle ./main.typ
-  == Gleamとは
+    == Gleamとは
 
-  Louis Pilfold氏が開発している、静的型付けの関数型言語\
-  シンプルな構文とErlang VMに基づいた並列性が特徴
+    Louis Pilfold氏が開発している、静的型付けの関数型言語\
+    シンプルな構文とErlang VMに基づいた並列性が特徴
 
-  #pagebreak() 
+    GitHub 19.4K ⭐
+
+    #speaker-note[
+      + Erlang VMのみならずJSでも動かせる。
+      + Louis Pilfold氏はロンドン在住
+      + 日本だとDiscordコミュニティのピークタイムが深夜1時過ぎぐらいで時差がキツい
+      + 
+    ]
 #+end_src
 
-Erlang VMのみならずJSでも動かせる。
 
 #+begin_src typst-ts :tangle ./main.typ
-  #focus-slide[
-      シンプル...Goと何が違うの？
+    #focus-slide[
+        シンプル...Goと何が違うの？
+    ]
+
+  #speaker-note[
+    + ここでちょっと思想の話になります。
+    + シンプルというとGoが思い浮かぶ方もいると思いますが、何が違うのかというとシンプルに対する視点が違います。
+    + 6 yearts with gleamっていう記事があるのだけど、そこに作者さんのこういう言葉が紹介されています。
   ]
 #+end_src
 
-ここでちょっと思想の話になります。
-
-シンプルというとGoが思い浮かぶ方もいると思いますが、何が違うのかというとシンプルに対する視点が違います。
-
-6 yearts with gleamっていう記事があるのだけど、そこに作者さんのこういう言葉が紹介されています。
 
 #+begin_src typst-ts :tangle ./main.typ
-  == Gleamとは
+  #center-image("./images/6-years-with-gleam.png", width: 55%)
+  #align(center)[#text("https://crowdhailer.me/2024-10-04/6-years-with-gleam/", 10pt)]
 
-    #center-image("./images/6-years-with-gleam.png", width: 55%)
-    #align(center)[#text("https://crowdhailer.me/2024-10-04/6-years-with-gleam/", 10pt)]
-
-    #pagebreak()
-
-    #align(horizon)[
-        #quote(block: true, attribution: [Louis Pilfold])[
-            Gleam is Go ideas but from the perspective of a FP nerd instead of a C nerd
-        ]
-    ]
-
-    #pagebreak() 
+  #align(horizon)[
+      #quote(block: true, attribution: [Louis Pilfold])[
+          Gleam is Go ideas but from the perspective of a FP nerd instead of a C nerd
+      ]
+  ]
 #+end_src
 
 
 #+begin_src typst-ts :tangle ./main.typ
-    == 意訳するなら
+  == 意訳するなら
 
-    #align(horizon)[
-        #quote(block: true, attribution: [Louis Pilfold])[
-            GleamはGoの設計思想を取り入れているけど、Cオタクの視点じゃなくてFPオタクの視点で解釈した言語だ。
-        ]
-    ]
+  #align(horizon)[
+      #quote(block: true, attribution: [Louis Pilfold])[
+          GleamはGoの設計思想を取り入れているけど、Cオタクの視点じゃなくてFPオタクの視点で解釈した言語だ。
+      ]
+  ]
+
+  #speaker-note[
+    + 例えばGoはループをforで行うけれど、Gleamにはforはなく再帰で行います。
+    + このアプローチはとても関数型的。
+  ]
 #+end_src
-
-例えばGoはループをforで行うけれど、Gleamにはforはなく再帰で行います。
-このアプローチはとても関数型的。
 
 ** Gleamの特徴
 
 #+begin_src typst-ts :tangle ./main.typ 
   == Gleamの特徴
 
-  - シンプルな構文
-  - 関数型言語由来の関数が多いためコードがスッキリする
-  - エラーメッセージが親切
-  - Erlang VM / JS Runtimeで動く
+    - シンプルな構文
+    - 関数型言語由来の関数が多いためコードがスッキリする
+    - エラーメッセージが親切
+    - Erlang VM / JS Runtimeで動く
 
+  #speaker-note[
+    + Gleamは構文がシンプルなので、ある程度プログラミングに慣れている人は半日程度(公式情報)で構文を把握できる。
+    + また、`map`や`reduce`等関数型言語由来の関数が使えるためコードがとてもスッキリするという特徴がある。
+
+    + Gleamはユーザーフレンドリーに重きを置いており、コンパイラのエラーメッセージなどが非常に読みやすくなっている。
+  ]
 #+end_src
 
-Gleamは構文がシンプルなので、ある程度プログラミングに慣れている人は半日程度で構文を把握できる。
-また、`map`や`reduce`等関数型言語由来の関数が使えるためコードがとてもスッキリするという特徴がある。
 
-Gleamはユーザーフレンドリーに重きを置いており、コンパイラのエラーメッセージなどが非常に読みやすくなっている。
-
-エラーメッセージの一例を以下に示してみる。
+** Erlnag VMについて
 
 #+begin_src typst-ts :tangle ./main.typ 
-        == エラーメッセージの例
+  == Erlnag VMについて
 
-  #block(
-      stroke: 1pt,
-      inset: 0.55em,
-      radius: 5pt, 
-      fill: white,
-    )[
-  #text(size: 14pt, fill: black, font: "UDEV Gothic NF")[
-  ```text
-                error: Unknown variable
-                  ┌─ /src/main.gleam:3:8
-                  │
-                3 │   echo prson
-                  │        ^^^^^ Did you mean person?
+  #center-image("images/why-erlang.png", width: 55%)
+  #ref-url[https://gist.github.com/voluntas/81ab2fe15372c9c67f3e0b12b3f534fa]
 
-                The name prson is not in scope here.
-
-                warning: Unused variable
-                  ┌─ /src/main.gleam:2:7
-                  │
-                2 │   let person = "Jhon"
-                  │       ^^^^^^ This variable is never used
-
-                Hint: You can ignore it with an underscore: _person.
-                ```
-  ]]
+  #speaker-note[
+    + ここまではGleamそのもの考えについて触れてきたけれど、Gleamが動くErlang VMについてはどうなのか
+    + Elixirの発表が多くあり語り尽されているのと、素晴しい文章があるのでこれを紹介するに留める
+  ]
 #+end_src
 
-`person`を`prson`とtypoしてしまっているのが見て取れる。
+
+#+begin_src typst-ts :tangle ./main.typ 
+  == エラーメッセージの例
+  #align(center)[
+      #v(1em)
+      #block(
+          stroke: 1pt,
+          inset: 0.55em,
+          radius: 5pt, 
+          fill: white,
+        )[
+      #text(size: 14pt, fill: black, font: "UDEV Gothic NF")[
+      ```text
+                    error: Unknown variable
+                      ┌─ /src/main.gleam:3:8
+                      │
+                    3 │   echo prson
+                      │        ^^^^^ Did you mean person?
+
+                    The name prson is not in scope here.
+
+                    warning: Unused variable
+                      ┌─ /src/main.gleam:2:7
+                      │
+                    2 │   let person = "Jhon"
+                      │       ^^^^^^ This variable is never used
+
+                    Hint: You can ignore it with an underscore: _person.
+                    ```
+      ]]]
+
+    #speaker-note[
+      + `person`を`prson`とtypoしてしまっているのが見て取れる。
+    ]
+#+end_src
+
 
 ** 開発環境
 
@@ -217,19 +261,23 @@ Gleamはユーザーフレンドリーに重きを置いており、コンパイ
     [型アノテーションの追加],
     [#icode[import]文の自動追加],
     [#icode[case]における不足してるパターンの追加],
-    [パイプ形式でへの自動変換],
+    [パイプ形式への自動変換],
   )
 
-  #center-image("images/2024-07-14-gleam-release-v1-3-0.png")
+  #speaker-note[
+    + また、LSPによるサポートも充実している。
+    + コードアクションの一例としてこれらのコードアクションがある。
+
+    + 最近ではJSONのデコーダーを自動生成するアクションなども追加されていて、開発体験がますます向上している。
+    + (`gleam/json`ライブラリをプロジェクトに追加しないと発動しない)
+  ]
 #+end_src
 
-また、LSPによるサポートも充実している。
-コードアクションの一例としてこれらのコードアクションがある。
+#+begin_src typst-ts :tangle ./main.typ 
+  #center-image("images/2024-07-14-gleam-release-v1-3-0.png")
+  #speaker-note[+ 詳しくはZennで] 
+#+end_src
 
-最近ではJSONのデコーダーを自動生成するアクションなども追加されていて、開発体験がますます向上している。
-(`gleam/json`ライブラリをプロジェクトに追加しないと発動しない)
-
-詳しくはZennで
 
 ** 構文
 
@@ -241,6 +289,12 @@ Gleamはユーザーフレンドリーに重きを置いており、コンパイ
   - ブロック構文
   - パターンマッチ
   - パイプライン演算子
+
+  #speaker-note[
+    + Elm経験者いわくサーバーでも動くElmみたいらしい
+    + 基本的な言語機能が少なく標準ライブラリでカバーする方針
+    + なので構文を覚えても実用的なプログラムを書くなら標準ライブラリの関数を覚える必要がある
+  ] 
 #+end_src
 
 #+begin_src typst-ts :tangle ./main.typ 
@@ -253,13 +307,19 @@ Gleamはユーザーフレンドリーに重きを置いており、コンパイ
   - middleware
 
   などが表現できる
+
+  #speaker-note[
+   + 個人的に一番Gleamらしいと思う構文   
+  ]
 #+end_src
 
 #+begin_src typst-ts :tangle ./main.typ
   #center-image("images/gleam-use-syntax.png")
-#+end_src
 
-個人的に一番Gleamらしいと思う構文
+  #speaker-note[
+    + 詳しくはZennで
+  ] 
+#+end_src
 
 #+begin_src typst-ts :tangle ./main.typ
   == 例えば
@@ -275,33 +335,41 @@ Gleamはユーザーフレンドリーに重きを置いており、コンパイ
   ]
 
   #pagebreak()
+
+  #speaker-note[
+    + 完全に網羅しないとコンパイルエラーが発生する
+    + 網羅性がコンパイラで保証される
+  ]
 #+end_src
 
 #+begin_src typst-ts :tangle ./main.typ
-  #sourcecode()[
-   ```rust
-   import gleam/list
-   
-   pub fn main() {
-    list.range(0, 10)
-    |> list.map(fn (n) { n * 2 })
-    |> list.filter(fn (n) {n % 3 == 0})
-    |> echo
-   }
-   ```]
+      #sourcecode()[
+       ```rust
+       import gleam/list
+       
+       pub fn main() {
+        list.range(0, 10)
+        |> list.map(fn (n) { n * 2 })
+        |> list.filter(fn (n) {n % 3 == 0})
+        |> echo
+       }
+       ```]
+      
+  #speaker-note[
+     + パイプライン演算子でデータの処理の流れを直感的に記述できる
+  ]
 #+end_src
 
-完全に網羅しないとコンパイルエラーが発生する
--> 網羅性がコンパイラで検証できる
 
 #+begin_src typst-ts :tangle ./main.typ
   #center-image("./images/gleam-tour-for-typescript-user.png")
+
+  #speaker-note[
+    + 詳しくはZennで
+  ] 
 #+end_src
 
-詳しくはZennで
-
 ** 開発環境
-
 
 #+begin_src typst-ts :tangle ./main.typ 
   == 開発環境
@@ -312,9 +380,11 @@ Gleamはユーザーフレンドリーに重きを置いており、コンパイ
   ]
 
   #align(center)[#text("https://gleam.run/getting-started/installing/", 10pt)] 
-#+end_src
 
-環境構築についてですが、基本的に公式ドキュメントを読めばなんとかなります。
+  #speaker-note[
+    + 環境構築についてですが、基本的に公式ドキュメントを読めばなんとかなります。
+  ] 
+#+end_src
 
 #+begin_src typst-ts :tangle ./main.typ 
   == インストール
@@ -323,10 +393,12 @@ Gleamはユーザーフレンドリーに重きを置いており、コンパイ
   - apt
   - scoop
   - Nix
-#+end_src
 
-主要なパッケージマネージャには大体対応しています。
-Nixだけはちょっと注意が必要で、nixpkgsにあるGleamは古いのと現状overlayがないので自分でnix式を書いてbuildする必要があります。
+  #speaker-note[
+    + 主要なパッケージマネージャには大体対応しています。
+    + Nixだけはちょっと注意が必要で、nixpkgsにあるGleamは古いのと現状overlayがないので自分でnix式を書いてbuildする必要があります。
+  ] 
+#+end_src
 
 #+begin_src typst-ts :tangle ./main.typ 
   == 拡張機能
@@ -334,9 +406,11 @@ Nixだけはちょっと注意が必要で、nixpkgsにあるGleamは古いの�
   - Vim
   - Emacs
   - Zed
-#+end_src
 
-拡張機能は公式でこの4つがサポートされています。
+  #speaker-note[
+    + 拡張機能は公式でこの4つがサポートされています。
+  ] 
+#+end_src
 
 ** エコシステム
 
@@ -346,23 +420,24 @@ Nixだけはちょっと注意が必要で、nixpkgsにあるGleamは古いの�
   ]
 #+end_src
 
-*** Webアプリケーション
+** Webアプリケーション
 
 #+begin_src typst-ts :tangle ./main.typ 
-  == Webサーバー
-  - #icode[gleam/http]
-  - #icode[mist]
-  - #icode[wisp]
+    == Webサーバー
+    - #icode[gleam/http]
+    - #icode[mist]
+    - #icode[wisp]
+
+    #speaker-note[
+      + 一般的にGleam公式のHTTPパッケージをベースに作られているのでライブラリ間で型の互換性が確保されている。
+      + webサーバーと合わせて紹介したけれど、webクライアントもこれをベースに開発されている。
+      
+      + 型のみを定義することでErlang VMでもJS Runtimeでもサーバーやクライアントを自由に実装できる。
+      
+      + mistというのがデファクトなwebサーバーになっていて、Gleamで書かれている。
+      + wispはmistをベースに定型的な処理を提供している。
+    ] 
 #+end_src
-
-gleam/httpは公式パッケージで、webアプリケーションプログミングに必要な型が定義されている。
-gleamのライブラリは一般的にこのパッケージをベースに作られているのでライブラリ間で型の互換性が確保されている。
-webサーバーと合わせて紹介したけれど、webクライアントもこれをベースに開発されている。
-
-型のみを定義することでErlang VMでもJS Runtimeでもサーバーやクライアントを自由に実装できる。
-
-mistというのがデファクトなwebサーバーになっていて、Gleamで書かれている。
-wispはmistをベースに定型的な処理を提供している。
 
 #+begin_src typst-ts :tangle ./main.typ 
   == ルーティング
@@ -383,65 +458,74 @@ wispはmistをベースに定型的な処理を提供している。
     }
   }
   ```]
+
+
+  #speaker-note[
+    + path_segmentsっていう関数を使うとリクエストが来たpathを文字列のリストに分割してくれる。
+    + それをパータンマッチしてルーティングを行う。
+    + 先程述べたように、パターンマッチはコンパイラが検証するためこのルーティングもコンパイル時に網羅性が検証される。
+  ] 
 #+end_src
 
 
-path_segmentsっていう関数を使うとリクエストが来たpathを文字列のリストに分割してくれる。
-それをパータンマッチしてルーティングを行う。
-
 #+begin_src typst-ts :tangle ./main.typ 
-  == ミドルウェア
+    == ミドルウェア
 
-  #sourcecode()[
-  [
-  ```rust
-  pub fn greet_middleware(req: Request, handler: fn (Request) -> Response) -> Response {
-    io.println("Hello!")
-  }
-
-  pub fn handle_request(req: Request) -> Response {
-    use req <- greet_middleware(req)
-
-    case wisp.path_segments(req) {
-      [] -> index(req)
-      _ -> wisp.not_found()
+    #sourcecode()[
+    [
+    ```rust
+    pub fn greet_middleware(req: Request, handler: fn (Request) -> Response) -> Response {
+      io.println("Hello!")
     }
-  }
-  ```]]
+
+    pub fn handle_request(req: Request) -> Response {
+      use req <- greet_middleware(req)
+
+      case wisp.path_segments(req) {
+        [] -> index(req)
+        _ -> wisp.not_found()
+      }
+    }
+    ```]]
+
+  #speaker-note[
+    + リクエストが来たらHello!を表示するミドルウェア
+
+    + GleamのハンドラーはRequest -> Responseという形に抽象化できる
+
+    + ミドルウェアは「Request」と「Requestを受け取ってResponseを返す関数」を受け取って、Responseを返す関数fn (req: Request, next: fn (Request) -> Response) -> Responseに抽象化できる。
+
+    + この関数はuseを適用できるため、useを複数使って連鎖的にミドルウェアを適用できます。
+  ] 
 #+end_src
 
-リクエストが来たらHello!を表示するミドルウェア
 
-
-GleamのハンドラーはRequest -> Responseという形に抽象化できる
-
-ミドルウェアは
-RequestとRequestを受け取ってResponseを返す関数を受け取って、Responseを返す関数
-fn (req: Request, next: fn (Request) -> Response) -> Responseに抽象化できる。
-
-この関数はuseを適用できるため、useを複数使って連鎖的にミドルウェアを適用できます。
+** フロントエンド
 
 #+begin_src typst-ts :tangle ./main.typ 
-  == Lustre
-  - TEAベースのWebフレームワーク
-  - 表示単位が純粋関数なため*どこでも*レンダリングできる
-  - CSR, SSR, SSGが可能
-  - 開発がLustre dev toolsで完結する
-  - GitHub 1.6K ⭐
+    == Lustre
+    - TEAベースのWebフレームワーク
+    - 表示単位が純粋関数なため*どこでも*レンダリングできる
+    - CSR, SSR, SSGが可能
+    - 開発がLustre dev toolsで完結する
+    - GitHub 1.6K ⭐
+
+
+  #speaker-note[
+    + フロントエンドまわりも色々あるんですが、ボリュームの都合上紹介しきれなさそうなのでLustreに絞って紹介します。
+
+    + LusterはElmアーキテクチャをベースにしたWebフレームワーク。
+    + CSR, SSR両対応でハイドレーションも可能。
+
+    + Gleamのキラーライブライリになりそうだと期待している。
+
+    + 以前は状態を含んだコンポーネントのコストが重かったが、最近になってweb componentsベースの実装になった影響でかなり軽くなった。
+  ]
 #+end_src
 
 #+begin_src typst-ts :tangle ./main.typ
   #center-image("./images/gleam-lustre.png")
 #+end_src
-
-フロントエンドまわりも色々あるんですが、ボリュームの都合上紹介しきれなさそうなのでLustreに絞って紹介します。
-
-LusterはElmアーキテクチャをベースにしたWebフレームワーク。
-CSR, SSR両対応でハイドレーションも可能。
-
-Gleamのキラーライブライリになりそうだと期待している。
-
-以前は状態を含んだコンポーネントのコストが重かったが、最近になってweb componentsベースの実装になった影響でかなり軽くなった。
 
 
 ** 実例
@@ -455,28 +539,34 @@ Gleamのキラーライブライリになりそうだと期待している。
 #+begin_src typst-ts :tangle ./main.typ
   == Gleam Packages
   #center-image("./images/gleam-packages.png", width: 65%)
+
+  #speaker-note[
+    + Gleamのパッケージを検索できるサイト。
+    + 内部的にはBEAMファミリー言語向けのパッケージレジストリhex.pmのAPIを叩いている。
+  ]
 #+end_src
 
-Gleamのパッケージを検索できるサイト。
-内部的にはBEAMファミリー言語向けのパッケージレジストリhex.pmのAPIを叩いている。
 
 #+begin_src typst-ts :tangle ./main.typ
   == Gloogle
   #center-image("./images/gleam-gloogle.png", width: 65%)
-#+end_src
 
-Gleamのパッケージドキュメントを全文検索できるサイト。
-ここ最近になってパフォーマンスがかなり向上した。
+  #speaker-note[
+    + Gleamのパッケージドキュメントを全文検索できるサイト。
+    + ここ最近になってパフォーマンスがかなり向上した。
+  ]
+#+end_src
 
 #+begin_src typst-ts :tangle ./main.typ
-  == kirakira
-  #center-image("./images/gleam-kirakira.png", width: 65%)
+    == kirakira
+    #center-image("./images/gleam-kirakira.png", width: 65%)
+
+
+  #speaker-note[
+    + Gleamで書かれた掲示板。新規登録するには管理人に申請する必要がある。
+    + ソースコードが公開されているので、フルスタックなアプリケーションをGleamで書く際の参考になる。
+  ]
 #+end_src
-
-ガンダムは関係ない。
-Gleamで書かれた掲示板。新規登録するには管理人に申請する必要がある。
-ソースコードが公開されているので、フルスタックなアプリケーションをGleamで書く際の参考になる。
-
 
 #+begin_src typst-ts :tangle ./main.typ
   == これからの展望
@@ -484,16 +574,22 @@ Gleamで書かれた掲示板。新規登録するには管理人に申請する
   - コード生成技術の発達
   - フルスタックフレームワークの発達
   - 新たなコンパイルターゲットの登場
-#+end_src
 
-フルスタックアプリケーションFWであるpevensieなど、エコシステムが成長する余地があるしこれからも成長していくだろうと思う。
+  #speaker-note[
+    + フルスタックアプリケーションFWであるpevensieなど、エコシステムが成長する余地があるしこれからも成長していくだろうと思う。
+    + 個人的な要望としては、現状コード生成するライブラリと解析するライブラリのAPIが異なるのでこれを統合したい
+    + ちゃんとコミュニティ作りたい
+    + そろそろmeetupやりたい
+    + 認証系のミドルウェアを揃えたい
+    + 構文的な不満としてはレコードが冗長な気がするのでスッキリ書けたら嬉しい
+  ]
+#+end_src
 
 #+begin_src typst-ts :tangle ./main.typ
   == 寄付について
   現在Louis Pilfold氏は*フルタイム*でGleamを開発しているのですが、残念ながら財政状況は良くないらしいです... \
   *GitHub Sponsors経由*で寄付を行えるので、Gleamを気に入ったらぜひ寄付をお願いします。
 #+end_src
-
 
 #+begin_src typst-ts :tangle ./main.typ
   #center-image("./images/gleam-sponsors.png", width: 70%)

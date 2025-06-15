@@ -4,9 +4,14 @@
 #import "../../lib/color.typ": *
 #import "@preview/codelst:2.0.2": sourcecode
 
-#show: comamoca-theme.with(total-slides: 9, primary: unnamed-blue)
+#show: comamoca-theme.with(
+    total-slides: 9,
+    primary: unnamed-blue,
+    config-common(show-notes-on-second-screen: right),
+)
 
 #let icode(name) = text(fill: faff-pink, raw(block: false, name.text))
+#let ref-url(url) = align(center)[#text("https://gleam.run/getting-started/installing/", 10pt)] 
 
 #let codelst-sourcecode = sourcecode
 #let sourcecode = codelst-sourcecode.with(
@@ -62,43 +67,64 @@
   #text("\ Twitterから来ました! /")
 ]
 
+#speaker-note[
+  + 懇親会でこのアイコンを見せるとTwitterで見たことあります！と言われる
+  + 出身は山梨で、今年就職と同時に上京してきた
+  + Gleamをかれこれ2年くらい追っている。
+]
+
 #center-image("./images/gleam-reverse-lookup.png")
+#speaker-note[+ 記事を書いたり]
+
 #center-image("./images/gleam-poem.png") 
+#speaker-note[+ 記事を書いたり]
+
 #center-image("./images/gleam-articles-list.png") 
-#center-image("./images/gleam-garnet.png")
+#speaker-note[+ 記事を書いたり]
+
+#center-image("./images/gleam-garnet.png") 
+#speaker-note[
+  + ツールを作ったりしている。
+  + このリポジトリはJS Runtime経由でシングルバイナリを作成するツール
+  + esbuildを使ってバンドルしたものをシングルバイナリにしている
+]
 
 == 注意点
-Gleam v1.11.0を前提にしています。 \
-Gleam Playgroundは現時点でv1.11.0に対応していないため、一部構文はエラーになる可能性があります。
-主に#icode[echo]キーワードなどが該当します。
-
-また、 表示の都合上importなどを省略している箇所があります。
+- 基本的にGleam v1.11.0を前提にしています。
+- 表示の都合上importなどを省略している箇所があります。
 
 == Gleamとは
 
 Louis Pilfold氏が開発している、静的型付けの関数型言語\
 シンプルな構文とErlang VMに基づいた並列性が特徴
 
-#pagebreak()
+GitHub 19.4K ⭐
 
-#focus-slide[
-    シンプル...Goと何が違うの？
+#speaker-note[
+  + Erlang VMのみならずJSでも動かせる。
+  + Louis Pilfold氏はロンドン在住
+  + 日本だとDiscordコミュニティのピークタイムが深夜1時過ぎぐらいで時差がキツい
+  + 
 ]
 
-== Gleamとは
-
-  #center-image("./images/6-years-with-gleam.png", width: 55%)
-  #align(center)[#text("https://crowdhailer.me/2024-10-04/6-years-with-gleam/", 10pt)]
-
-  #pagebreak()
-
-  #align(horizon)[
-      #quote(block: true, attribution: [Louis Pilfold])[
-          Gleam is Go ideas but from the perspective of a FP nerd instead of a C nerd
-      ]
+#focus-slide[
+      シンプル...Goと何が違うの？
   ]
 
-  #pagebreak()
+#speaker-note[
+  + ここでちょっと思想の話になります。
+  + シンプルというとGoが思い浮かぶ方もいると思いますが、何が違うのかというとシンプルに対する視点が違います。
+  + 6 yearts with gleamっていう記事があるのだけど、そこに作者さんのこういう言葉が紹介されています。
+]
+
+#center-image("./images/6-years-with-gleam.png", width: 55%)
+#align(center)[#text("https://crowdhailer.me/2024-10-04/6-years-with-gleam/", 10pt)]
+
+#align(horizon)[
+    #quote(block: true, attribution: [Louis Pilfold])[
+        Gleam is Go ideas but from the perspective of a FP nerd instead of a C nerd
+    ]
+]
 
 == 意訳するなら
 
@@ -108,40 +134,67 @@ Louis Pilfold氏が開発している、静的型付けの関数型言語\
     ]
 ]
 
+#speaker-note[
+  + 例えばGoはループをforで行うけれど、Gleamにはforはなく再帰で行います。
+  + このアプローチはとても関数型的。
+]
+
 == Gleamの特徴
 
-- シンプルな構文
-- 関数型言語由来の関数が多いためコードがスッキリする
-- エラーメッセージが親切
-- Erlang VM / JS Runtimeで動く
+  - シンプルな構文
+  - 関数型言語由来の関数が多いためコードがスッキリする
+  - エラーメッセージが親切
+  - Erlang VM / JS Runtimeで動く
+
+#speaker-note[
+  + Gleamは構文がシンプルなので、ある程度プログラミングに慣れている人は半日程度(公式情報)で構文を把握できる。
+  + また、`map`や`reduce`等関数型言語由来の関数が使えるためコードがとてもスッキリするという特徴がある。
+
+  + Gleamはユーザーフレンドリーに重きを置いており、コンパイラのエラーメッセージなどが非常に読みやすくなっている。
+]
+
+== Erlnag VMについて
+
+#center-image("images/why-erlang.png", width: 55%)
+#ref-url[https://gist.github.com/voluntas/81ab2fe15372c9c67f3e0b12b3f534fa]
+
+#speaker-note[
+  + ここまではGleamそのもの考えについて触れてきたけれど、Gleamが動くErlang VMについてはどうなのか
+  + Elixirの発表が多くあり語り尽されているのと、素晴しい文章があるのでこれを紹介するに留める
+]
 
 == エラーメッセージの例
+#align(center)[
+    #v(1em)
+    #block(
+        stroke: 1pt,
+        inset: 0.55em,
+        radius: 5pt, 
+        fill: white,
+      )[
+    #text(size: 14pt, fill: black, font: "UDEV Gothic NF")[
+    ```text
+                  error: Unknown variable
+                    ┌─ /src/main.gleam:3:8
+                    │
+                  3 │   echo prson
+                    │        ^^^^^ Did you mean person?
 
-#block(
-    stroke: 1pt,
-    inset: 0.55em,
-    radius: 5pt, 
-    fill: white,
-  )[
-#text(size: 14pt, fill: black, font: "UDEV Gothic NF")[
-```text
-              error: Unknown variable
-                ┌─ /src/main.gleam:3:8
-                │
-              3 │   echo prson
-                │        ^^^^^ Did you mean person?
+                  The name prson is not in scope here.
 
-              The name prson is not in scope here.
+                  warning: Unused variable
+                    ┌─ /src/main.gleam:2:7
+                    │
+                  2 │   let person = "Jhon"
+                    │       ^^^^^^ This variable is never used
 
-              warning: Unused variable
-                ┌─ /src/main.gleam:2:7
-                │
-              2 │   let person = "Jhon"
-                │       ^^^^^^ This variable is never used
+                  Hint: You can ignore it with an underscore: _person.
+                  ```
+    ]]]
 
-              Hint: You can ignore it with an underscore: _person.
-              ```
-]]
+  #speaker-note[
+    + `person`を`prson`とtypoしてしまっているのが見て取れる。
+  ]
 
 == LSP
 
@@ -149,10 +202,19 @@ Louis Pilfold氏が開発している、静的型付けの関数型言語\
   [型アノテーションの追加],
   [#icode[import]文の自動追加],
   [#icode[case]における不足してるパターンの追加],
-  [パイプ形式でへの自動変換],
+  [パイプ形式への自動変換],
 )
 
+#speaker-note[
+  + また、LSPによるサポートも充実している。
+  + コードアクションの一例としてこれらのコードアクションがある。
+
+  + 最近ではJSONのデコーダーを自動生成するアクションなども追加されていて、開発体験がますます向上している。
+  + (`gleam/json`ライブラリをプロジェクトに追加しないと発動しない)
+]
+
 #center-image("images/2024-07-14-gleam-release-v1-3-0.png")
+#speaker-note[+ 詳しくはZennで]
 
 == 構文
 
@@ -161,6 +223,12 @@ Louis Pilfold氏が開発している、静的型付けの関数型言語\
 - ブロック構文
 - パターンマッチ
 - パイプライン演算子
+
+#speaker-note[
+  + Elm経験者いわくサーバーでも動くElmみたいらしい
+  + 基本的な言語機能が少なく標準ライブラリでカバーする方針
+  + なので構文を覚えても実用的なプログラムを書くなら標準ライブラリの関数を覚える必要がある
+]
 
 == use構文
 これ一つで
@@ -172,7 +240,15 @@ Louis Pilfold氏が開発している、静的型付けの関数型言語\
 
 などが表現できる
 
+#speaker-note[
+ + 個人的に一番Gleamらしいと思う構文   
+]
+
 #center-image("images/gleam-use-syntax.png")
+
+#speaker-note[
+  + 詳しくはZennで
+]
 
 == 例えば
 
@@ -188,19 +264,32 @@ case True {
 
 #pagebreak()
 
+#speaker-note[
+  + 完全に網羅しないとコンパイルエラーが発生する
+  + 網羅性がコンパイラで保証される
+]
+
 #sourcecode()[
- ```rust
- import gleam/list
- 
- pub fn main() {
-  list.range(0, 10)
-  |> list.map(fn (n) { n * 2 })
-  |> list.filter(fn (n) {n % 3 == 0})
-  |> echo
- }
- ```]
+     ```rust
+     import gleam/list
+     
+     pub fn main() {
+      list.range(0, 10)
+      |> list.map(fn (n) { n * 2 })
+      |> list.filter(fn (n) {n % 3 == 0})
+      |> echo
+     }
+     ```]
+    
+#speaker-note[
+   + パイプライン演算子でデータの処理の流れを直感的に記述できる
+]
 
 #center-image("./images/gleam-tour-for-typescript-user.png")
+
+#speaker-note[
+  + 詳しくはZennで
+]
 
 == 開発環境
 #align(center)[
@@ -209,7 +298,11 @@ case True {
     ]
 ]
 
-#align(center)[#text("https://gleam.run/getting-started/installing/", 10pt)]
+#align(center)[#text("https://gleam.run/getting-started/installing/", 10pt)] 
+
+#speaker-note[
+  + 環境構築についてですが、基本的に公式ドキュメントを読めばなんとかなります。
+]
 
 == インストール
 - brew
@@ -218,11 +311,20 @@ case True {
 - scoop
 - Nix
 
+#speaker-note[
+  + 主要なパッケージマネージャには大体対応しています。
+  + Nixだけはちょっと注意が必要で、nixpkgsにあるGleamは古いのと現状overlayがないので自分でnix式を書いてbuildする必要があります。
+]
+
 == 拡張機能
 - VSCode
 - Vim
 - Emacs
 - Zed
+
+#speaker-note[
+  + 拡張機能は公式でこの4つがサポートされています。
+]
 
 #focus-slide[
     Gleamのエコシステム
@@ -232,6 +334,16 @@ case True {
 - #icode[gleam/http]
 - #icode[mist]
 - #icode[wisp]
+
+#speaker-note[
+  + 一般的にGleam公式のHTTPパッケージをベースに作られているのでライブラリ間で型の互換性が確保されている。
+  + webサーバーと合わせて紹介したけれど、webクライアントもこれをベースに開発されている。
+  
+  + 型のみを定義することでErlang VMでもJS Runtimeでもサーバーやクライアントを自由に実装できる。
+  
+  + mistというのがデファクトなwebサーバーになっていて、Gleamで書かれている。
+  + wispはmistをベースに定型的な処理を提供している。
+]
 
 == ルーティング
 
@@ -252,31 +364,60 @@ pub fn handle_request(req: Request) -> Response {
 }
 ```]
 
+
+#speaker-note[
+  + path_segmentsっていう関数を使うとリクエストが来たpathを文字列のリストに分割してくれる。
+  + それをパータンマッチしてルーティングを行う。
+  + 先程述べたように、パターンマッチはコンパイラが検証するためこのルーティングもコンパイル時に網羅性が検証される。
+]
+
 == ミドルウェア
 
-#sourcecode()[
-[
-```rust
-pub fn greet_middleware(req: Request, handler: fn (Request) -> Response) -> Response {
-  io.println("Hello!")
-}
-
-pub fn handle_request(req: Request) -> Response {
-  use req <- greet_middleware(req)
-
-  case wisp.path_segments(req) {
-    [] -> index(req)
-    _ -> wisp.not_found()
+  #sourcecode()[
+  [
+  ```rust
+  pub fn greet_middleware(req: Request, handler: fn (Request) -> Response) -> Response {
+    io.println("Hello!")
   }
-}
-```]]
+
+  pub fn handle_request(req: Request) -> Response {
+    use req <- greet_middleware(req)
+
+    case wisp.path_segments(req) {
+      [] -> index(req)
+      _ -> wisp.not_found()
+    }
+  }
+  ```]]
+
+#speaker-note[
+  + リクエストが来たらHello!を表示するミドルウェア
+
+  + GleamのハンドラーはRequest -> Responseという形に抽象化できる
+
+  + ミドルウェアは「Request」と「Requestを受け取ってResponseを返す関数」を受け取って、Responseを返す関数fn (req: Request, next: fn (Request) -> Response) -> Responseに抽象化できる。
+
+  + この関数はuseを適用できるため、useを複数使って連鎖的にミドルウェアを適用できます。
+]
 
 == Lustre
-- TEAベースのWebフレームワーク
-- 表示単位が純粋関数なため*どこでも*レンダリングできる
-- CSR, SSR, SSGが可能
-- 開発がLustre dev toolsで完結する
-- GitHub 1.6K ⭐
+  - TEAベースのWebフレームワーク
+  - 表示単位が純粋関数なため*どこでも*レンダリングできる
+  - CSR, SSR, SSGが可能
+  - 開発がLustre dev toolsで完結する
+  - GitHub 1.6K ⭐
+
+
+#speaker-note[
+  + フロントエンドまわりも色々あるんですが、ボリュームの都合上紹介しきれなさそうなのでLustreに絞って紹介します。
+
+  + LusterはElmアーキテクチャをベースにしたWebフレームワーク。
+  + CSR, SSR両対応でハイドレーションも可能。
+
+  + Gleamのキラーライブライリになりそうだと期待している。
+
+  + 以前は状態を含んだコンポーネントのコストが重かったが、最近になってweb componentsベースの実装になった影響でかなり軽くなった。
+]
 
 #center-image("./images/gleam-lustre.png")
 
@@ -287,17 +428,42 @@ pub fn handle_request(req: Request) -> Response {
 == Gleam Packages
 #center-image("./images/gleam-packages.png", width: 65%)
 
+#speaker-note[
+  + Gleamのパッケージを検索できるサイト。
+  + 内部的にはBEAMファミリー言語向けのパッケージレジストリhex.pmのAPIを叩いている。
+]
+
 == Gloogle
 #center-image("./images/gleam-gloogle.png", width: 65%)
 
+#speaker-note[
+  + Gleamのパッケージドキュメントを全文検索できるサイト。
+  + ここ最近になってパフォーマンスがかなり向上した。
+]
+
 == kirakira
-#center-image("./images/gleam-kirakira.png", width: 65%)
+  #center-image("./images/gleam-kirakira.png", width: 65%)
+
+
+#speaker-note[
+  + Gleamで書かれた掲示板。新規登録するには管理人に申請する必要がある。
+  + ソースコードが公開されているので、フルスタックなアプリケーションをGleamで書く際の参考になる。
+]
 
 == これからの展望
 - 更なる開発支援機能の追加
 - コード生成技術の発達
 - フルスタックフレームワークの発達
 - 新たなコンパイルターゲットの登場
+
+#speaker-note[
+  + フルスタックアプリケーションFWであるpevensieなど、エコシステムが成長する余地があるしこれからも成長していくだろうと思う。
+  + 個人的な要望としては、現状コード生成するライブラリと解析するライブラリのAPIが異なるのでこれを統合したい
+  + ちゃんとコミュニティ作りたい
+  + そろそろmeetupやりたい
+  + 認証系のミドルウェアを揃えたい
+  + 構文的な不満としてはレコードが冗長な気がするのでスッキリ書けたら嬉しい
+]
 
 == 寄付について
 現在Louis Pilfold氏は*フルタイム*でGleamを開発しているのですが、残念ながら財政状況は良くないらしいです... \
