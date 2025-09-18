@@ -123,6 +123,8 @@
               packages = with pkgs; [
                 nil
                 tinymist
+                gum
+                just
               ];
 
               fontPaths = [

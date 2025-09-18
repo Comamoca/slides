@@ -165,23 +165,12 @@
 })
 
 
-/// Touying 用のシンプルなテーマ。
+/// 自作したオリジナルテーマ
 ///
 /// 使用例:
 ///
 /// ```typst
 /// #show: simple-theme.with(aspect-ratio: "16-9", config-colors(primary: blue))
-/// ```
-///
-/// デフォルトの配色:
-///
-/// ```typst
-/// config-colors(
-///   neutral-light: gray,
-///   neutral-lightest: rgb("#ffffff"),
-///   neutral-darkest: rgb("#000000"),
-///   primary: aqua.darken(50%),
-/// )
 /// ```
 ///
 /// - aspect-ratio (文字列): スライドのアスペクト比。デフォルトは `"16-9"`。
