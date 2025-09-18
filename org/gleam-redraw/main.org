@@ -1,0 +1,247 @@
+#+STARTUP: fold
+
+** import
+
+#+begin_src typst-ts :tangle ./main.typ
+  #import "@preview/touying:0.6.1": *
+  // #import themes.simple: *
+  #import "../../lib/theme.typ": *
+  #import "../../lib/color.typ": *
+  #import "@preview/codelst:2.0.2": sourcecode
+#+end_src
+
+** 設定
+
+#+begin_src typst-ts :tangle ./main.typ 
+  #show: comamoca-theme.with(
+      total-slides: 9,
+      primary: unnamed-blue,
+      // pympress用のスピーカーノートを生成
+      // config-common(show-notes-on-second-screen: right),
+  )
+
+  #let icode(name) = text(fill: faff-pink, raw(block: false, name.text))
+  #let ref-url(url) = align(center)[#text("https://gleam.run/getting-started/installing/", 10pt)] 
+
+  #let codelst-sourcecode = sourcecode
+  #let sourcecode = codelst-sourcecode.with(
+    frame: block.with(
+      fill: underwater-blue,
+      stroke: 1pt + faff-pink,
+      radius: 5pt,
+      inset: (x: 10pt, y: 5pt)
+    )
+  )
+
+  #let center-image(path, width: 80%) = align(center, pad(y: 1em, align(center, image(
+    path,
+    width: width,
+  ))))
+  #set page(fill: underwater-blue)
+  #set text(font: "Noto Sans", fill: white)
+
+  #set list(spacing: 1.2em)
+
+  // #set text(font: "UDEV Gothic NF")
+  #show regex("[\p{scx:Han}\p{scx:Hira}\p{scx:Kana}]"): set text(
+    font: "UDEV Gothic NF",
+  )
+#+end_src
+
+** タイトル
+
+#+begin_src typst-ts :tangle ./main.typ
+  #title-slide(
+    [
+      #align(center)[
+        #block[
+          #set align(left)
+          #v(3em)
+          #stack(
+            dir: ttb,
+            spacing: 1em,
+            text("GleamでReactを書こう", size: 2em),
+            text("React Tokyo LT 9/19"),
+          )
+          #v(2em)
+          #stack(dir: ltr, image("./images/icon.png", width: 10%), h(0.5em), text("こまもか", size: 1.4em))
+      ]
+      ]
+    ]
+  )
+#+end_src
+
+** 自己紹介
+
+#+begin_src typst-ts :tangle ./main.typ 
+  == 自己紹介
+
+  #align(horizon)[
+    #align(center)[
+        #text(3em)[省略]
+    ]
+  ]
+
+  #speaker-note[
+      Gleamのことを調べれば勝手に出てくるので省略
+
+      36℃U・B・U良いですよね
+  ]
+#+end_src
+
+** Gleamとは
+
+#+begin_src typst-ts :tangle ./main.typ
+  == Gleamとは
+
+  静的型付けな関数型言語
+
+  ErlangとJavaScript(ES6)にコンパイルできる。
+
+  JSターゲットにおいてNode.js, Deno, Bunの3つのJavaScript Runtimeをサポートしているのが特徴的。
+#+end_src
+
+
+#+begin_src typst-ts :tangle ./main.typ
+  == 構文
+
+  Gleamで書いたFizzBuz
+
+  #sourcecode()[
+      ```rust
+  list.range(1, 30)
+  |> list.map(fn(num) {
+    case num % 15 {
+      3 | 6 | 9 | 12 -> "Fizz"
+      5 | 10 -> "Buzz"
+      0 -> "FizzBuzz"
+      _ -> int.to_string(num)
+    }
+  })
+  |> string.join("\n")
+      ```
+          ]
+
+  #speaker-note[
+      限界まで切り詰めているのでこのままだと動かない
+  ]
+#+end_src
+
+** Gleamとフロントエンド
+
+#+begin_src typst-ts :tangle ./main.typ
+  == Gleamとフロントエンド
+
+  GleamはJavaScript(しかもES6)に対応している。
+
+  JavaScriptが生成できるという事はフロントエンドの開発に使える。
+
+  Gleamをフロントエンドの開発に使うのは当然の摂理。 
+
+  #speaker-note[
+      実際LustreというElmアーキテクチャのSPAフレームワークが実用的になる段階まで成長している。
+      
+      GleamコミュニティではフロントエンドにLustreを使うのが主流になっている。
+  ]
+#+end_src
+
+
+** GleamでReactを書こう
+
+#+begin_src typst-ts :tangle ./main.typ
+  == GleamでReactを書こう
+
+  GleamでReactを書く利点(主観) 
+
+  - 関数の外に変数を定義できないため、コンポーネントの純粋性がある程度保たれる
+  - JS/TSにない構文(パターンマッチ, パイプライン, ブロック)が使える
+
+
+  #speaker-note[
+      しかしここはReact Tokyo meetup。
+
+      Reactの話をする必要があるのでGleamでReactを書く話をしていきます。
+  ]
+#+end_src
+
+** redrawについて
+
+#+begin_src typst-ts :tangle ./main.typ
+  == rewrawについて
+  - GleamのReact wrapper
+  - Gleamの関数でReactコンポーネントを定義できる
+  - Hooksも使える
+  - (FFIを書けば)既存のJSXコンポーネントも呼び出せる
+#+end_src
+
+
+** やってみた
+
+#+begin_src typst-ts :tangle ./main.typ
+  == やってみた
+
+  #text(0.8em)[サンプルは`Comamoca/sandbox-gleam`の`ex_gleam_redraw`ディレクトリにある]
+  Hooksを使ったカウンターの例 
+
+  #align(center)[
+      #image("./images/counter.png", width: 20%)
+  ]
+#+end_src
+
+
+#+begin_src typst-ts :tangle ./main.typ
+  == コードはこんな感じ
+
+  #sourcecode()[
+  ```rust
+    // コンポーネント定義
+    use _ <- react.element("Counter")
+
+    // useState定義
+    let #(count, set_count) = react.use_state(0)
+  ```
+  ]
+
+  #sourcecode()[
+  ```rust
+    // コンポーネント定義
+    use _ <- react.element("Counter")
+
+    let #(count, set_count) = react.use_state(0)
+  ```
+  ]
+#+end_src
+
+#+begin_src typst-ts :tangle ./main.typ
+    == コードはこんな感じ
+
+    #sourcecode()[
+    ```rust
+    // useStateの値を表示
+    html.p([a.class("mx-auto text-2xl pb-5")], [
+      // Stateは数値で持っているので文字列型に変換している
+      html.text(int.to_string(count)),
+    ]),
+    ```
+    ]
+
+    #sourcecode()[
+    ```rust
+    // もちろんコールバックも登録できる
+    html.button(
+      [events.on_click(fn(_) { set_count(count - 1) })],
+      [html.text("-")]
+    )
+    ```
+    ]
+#+end_src
+
+** まとめ
+
+#+begin_src typst-ts :tangle ./main.typ
+  == まとめ
+  - Lustreが主流とはいえGleamでもReactが使える
+  - Reactの膨大な資産 x JSにない構文の組合せは魅力的に見える
+  - Jotai, shadcn/ui等既存の資産を使うとどうなるのか気になる
+  - JavaScriptバックエンドでフルスタックGleamしたい
+#+end_src
