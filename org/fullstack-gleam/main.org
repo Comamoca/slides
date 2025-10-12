@@ -1,0 +1,194 @@
+#+STARTUP: fold
+
+** import
+
+#+begin_src typst-ts :tangle ./main.typ
+  #import "@preview/touying:0.6.1": *
+  // #import themes.simple: *
+  #import "../../lib/theme.typ": *
+  #import "../../lib/color.typ": *
+  #import "@preview/codelst:2.0.2": sourcecode
+#+end_src
+
+** 設定
+
+#+begin_src typst-ts :tangle ./main.typ 
+  #show: comamoca-theme.with(
+      total-slides: 9,
+      primary: unnamed-blue,
+      // pympress用のスピーカーノートを生成
+      // config-common(show-notes-on-second-screen: right),
+  )
+
+  #let icode(name) = text(fill: faff-pink, raw(block: false, name.text))
+  #let ref-url(url) = align(center)[#text("https://gleam.run/getting-started/installing/", 10pt)] 
+
+  #let codelst-sourcecode = sourcecode
+  #let sourcecode = codelst-sourcecode.with(
+    frame: block.with(
+      fill: underwater-blue,
+      stroke: 1pt + faff-pink,
+      radius: 5pt,
+      inset: (x: 10pt, y: 5pt)
+    )
+  )
+
+  #let center-image(path, width: 80%) = align(center, pad(y: 1em, align(center, image(
+    path,
+    width: width,
+  ))))
+  #set page(fill: underwater-blue)
+  #set text(font: "Noto Sans", fill: white)
+
+  #set list(spacing: 1.2em)
+
+  // #set text(font: "UDEV Gothic NF")
+  #show regex("[\p{scx:Han}\p{scx:Hira}\p{scx:Kana}]"): set text(
+    font: "UDEV Gothic NF",
+  )
+#+end_src
+
+** タイトル
+
+#+begin_src typst-ts :tangle ./main.typ
+  #title-slide(
+    [
+      #align(center)[
+        #block[
+          #set align(left)
+          #v(3em)
+          #stack(
+            dir: ttb,
+            spacing: 1em,
+            text("FullStack Gleamをやりたい", size: 2em),
+            text("Otsuki.なんか 10/10"),
+          )
+          #v(2em)
+          #stack(dir: ltr, image("./images/icon.png", width: 10%), h(0.5em), text("こまもか", size: 1.4em))
+      ]
+      ]
+    ]
+  )
+#+end_src
+
+** 自己紹介
+
+#+begin_src typst-ts :tangle ./main.typ 
+      == 自己紹介
+      - 山梨出身
+      - 今年上京した
+      - 最近はGleamで色々やっている
+        - 登壇したり
+        - 記事書いたり
+        - パッケージ書いたり
+#+end_src
+
+
+** 前回までのあらすじ
+
+
+#+begin_src typst-ts :tangle ./main.typ
+  == 前回までのあらすじ
+  - 前回(React Tokyo #9)
+  #box(image("./images/thumnail.png", width: 60%), stroke: 5pt + white, radius: 3pt)
+#+end_src
+
+#+begin_src typst-ts :tangle ./main.typ
+  == 前回までのあらすじ
+  - 前回(React Tokyo #9)
+  #box(image("./images/slide11.png", width: 60%), stroke: 5pt + white, radius: 3pt)
+#+end_src
+
+#+begin_src typst-ts :tangle ./main.typ
+  #focus-slide("フルスタックGleamしたい")
+#+end_src
+
+** Gleamとは
+
+#+begin_src typst-ts :tangle ./main.typ
+  == Gleamとは
+  - 静的型付けな関数型言語
+  - ErlangとJavaScript(ES6)にコンパイルできる。
+  - JSターゲットにおいてNode.js, Deno, Bunの3つのJavaScript Runtimeをサポートしているのが特徴的。
+  - Language Tourとか見るとノリが掴みやすいかも
+#+end_src
+
+** fullstack アプリケーション
+
+#+begin_src typst-ts :tangle ./main.typ
+  == fullstackアプリケーションに必要な要素
+  - DB
+  - サーバー
+  - フロントエンド
+#+end_src
+
+
+** DB
+
+#+begin_src typst-ts :tangle ./main.typ
+    == DB
+    - Erlang側のサポートが厚い
+       - Squirrel
+       - Parrot(sqlc)
+          - どちらもSQLからコード生成する
+       - クエリビルダとしてCakeがある
+#+end_src
+
+** サーバー
+
+#+begin_src typst-ts :tangle ./main.typ
+  == サーバー
+   - これもErlang側のサポートが厚い
+      - mist(Webサーバー)
+      - wisp(Webフレームワーク)
+#+end_src
+
+** フロントエンド
+
+#+begin_src typst-ts :tangle ./main.typ
+    == フロントエンド
+     - Lustre
+      - TEAベースのSPAフレームワーク
+      - view関数(Reactで言うコンポーネント)が純粋となっている
+        - 純粋なため -どこでもレンダリングできる
+        - SSR/SPAを混在できる
+      - 最近は最適化でReactと張れる速度になった
+#+end_src
+
+** JavaScript側のサポートが薄い
+
+#+begin_src typst-ts :tangle ./main.typ
+  == JavaScript側のサポートが薄い
+  - サーバー
+     - 作っている(Hinoto)
+  - DB
+     - 作る予定(node-pgのラッパー)
+#+end_src
+
+** CloudFlare
+
+#+begin_src typst-ts :tangle ./main.typ
+  == CloudFlareと相性良いのでは
+   - DB(D1)とサーバー(Workers)がある
+      - JSとめちゃくちゃ相性が良い
+      - Workers Assetsを使えばWorkersでフルスタックなアプリが作れる
+   - ただ現状JSのサポートが弱いのが課題
+#+end_src
+
+** これからやりたいこと
+#+begin_src typst-ts :tangle ./main.typ
+  == これからやりたいこと
+  - JSのエコシステムを充実させていきたい 
+  - 実際にフルスタックなWebアプリを作っていきたい
+#+end_src
+
+
+** まとめ
+
+#+begin_src typst-ts :tangle ./main.typ
+  == まとめ
+  - Gleamはフルスタックアプリケーションを開発できるポテンシャルがある
+  - でもエコシステム(特にJSターゲット)が足りない
+  - そこを補うようパッケージとかを色々作っている
+  - フルスタックGleamを推していきたい
+#+end_src
