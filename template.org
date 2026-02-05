@@ -1,0 +1,94 @@
+#+STARTUP: fold
+
+** import
+
+#+begin_src typst-ts :tangle ./main.typ
+  #import "@preview/touying:0.6.1": *
+  // #import themes.simple: *
+  #import "../../lib/theme.typ": *
+  #import "../../lib/color.typ": *
+  #import "@preview/codelst:2.0.2": sourcecode
+#+end_src
+
+** 設定
+
+#+begin_src typst-ts :tangle ./main.typ 
+  #show: comamoca-theme.with(
+      total-slides: 9,
+      primary: unnamed-blue,
+      // pympress用のスピーカーノートを生成
+      // config-common(show-notes-on-second-screen: right),
+  )
+
+  #let icode(name) = text(fill: faff-pink, raw(block: false, name.text))
+  #let ref-url(url) = align(center)[#text("https://gleam.run/getting-started/installing/", 10pt)] 
+
+  #let codelst-sourcecode = sourcecode
+  #let sourcecode = codelst-sourcecode.with(
+    frame: block.with(
+      fill: underwater-blue,
+      stroke: 1pt + faff-pink,
+      radius: 5pt,
+      inset: (x: 10pt, y: 5pt)
+    )
+  )
+
+  #let center-image(path, width: 80%) = align(center, pad(y: 1em, align(center, image(
+    path,
+    width: width,
+  ))))
+  #set page(fill: underwater-blue)
+  #set text(font: "Noto Sans", fill: white)
+
+  #set list(spacing: 1.2em)
+
+  // #set text(font: "UDEV Gothic NF")
+  #show regex("[\p{scx:Han}\p{scx:Hira}\p{scx:Kana}]"): set text(
+    font: "UDEV Gothic NF",
+  )
+#+end_src
+
+** タイトル
+
+#+begin_src typst-ts :tangle ./main.typ
+  #title-slide(
+    [
+      #align(center)[
+        #block[
+          #set align(left)
+          #v(3em)
+          #stack(
+            dir: ttb,
+            spacing: 1em,
+            text("タイトル", size: 2em),
+            text("発表イベント"),
+          )
+          #v(2em)
+          #stack(dir: ltr, image("./images/icon.png", width: 10%), h(0.5em), text("こまもか", size: 1.4em))
+      ]
+      ]
+    ]
+  )
+#+end_src
+
+** 自己紹介
+
+#+begin_src typst-ts :tangle ./main.typ 
+  == 自己紹介
+
+  #align(horizon)[
+    #align(center)[
+        #text(3em)[省略]
+    ]
+  ]
+
+  #speaker-note[
+  ]
+#+end_src
+
+** まとめ
+
+#+begin_src typst-ts :tangle ./main.typ
+  == まとめ
+#+end_src
+
