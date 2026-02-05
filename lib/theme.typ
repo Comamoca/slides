@@ -198,7 +198,7 @@
   // footer-right: context utils.slide-counter.display() + " / " + utils.last-slide-number,
   primary: aqua.darken(50%),
   subslide-preamble: block(below: 1.5em, text(
-    1.2em,
+    1.8em,
     weight: "bold",
     utils.display-current-heading(level: 2),
   )),
