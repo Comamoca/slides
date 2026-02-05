@@ -1,0 +1,140 @@
+#import "@preview/touying:0.6.1": *
+// #import themes.simple: *
+#import "../../lib/theme.typ": *
+#import "../../lib/color.typ": *
+#import "@preview/codelst:2.0.2": sourcecode
+
+#show: comamoca-theme.with(
+    total-slides: 9,
+    primary: unnamed-blue,
+    // pympress用のスピーカーノートを生成
+    // config-common(show-notes-on-second-screen: right),
+)
+
+#let icode(name) = text(fill: faff-pink, raw(block: false, name.text))
+#let ref-url(url) = align(center)[#text("https://gleam.run/getting-started/installing/", 10pt)] 
+
+#let codelst-sourcecode = sourcecode
+#let sourcecode = codelst-sourcecode.with(
+  frame: block.with(
+    fill: underwater-blue,
+    stroke: 1pt + faff-pink,
+    radius: 5pt,
+    inset: (x: 10pt, y: 5pt)
+  )
+)
+
+#let center-image(path, width: 80%) = align(center, pad(y: 1em, align(center, image(
+  path,
+  width: width,
+))))
+#set page(fill: underwater-blue)
+#set text(font: "Noto Sans", fill: white)
+
+#set list(spacing: 1.2em)
+
+// #set text(font: "UDEV Gothic NF")
+#show regex("[\p{scx:Han}\p{scx:Hira}\p{scx:Kana}]"): set text(
+  font: "UDEV Gothic NF",
+)
+
+#title-slide(
+  [
+    #align(center)[
+      #block[
+        #set align(left)
+        #v(3em)
+        #stack(
+          dir: ttb,
+          spacing: 1em,
+          text("王子住民が教える王子の良さ", size: 2em),
+          text("きたく.dev 2/6"),
+        )
+        #v(2em)
+        #stack(dir: ltr, image("./images/icon.png", width: 10%), h(0.5em), text("こまもか", size: 1.4em))
+    ]
+    ]
+  ]
+)
+
+== 自己紹介
+- 去年の4月から東京に来た
+- 去年の10月から毎月ライブ生活をしている
+- 事ある度にバンナムに金を吸われている
+
+#speaker-note[
+  毎月ライブ生活は健康になれるのでオススメ
+]
+
+== 王子とは
+ - 東京都北区の中央部に位置する
+ - 京浜東北線・荒川線・南北線の駅がある
+ - 渋沢栄一を町ぐるみで推している
+
+#speaker-note[
+  毎月ライブ生活は健康になれるのでオススメ
+  渋沢栄一は王子を拠点にしていたらしい
+]
+
+== 王子の概観
+- 京浜東北線を境に東部と西部に分けられる
+- 東部はいわゆる「栄えてる側」
+- 西部は団地が多く静かな住宅街となっている
+
+#speaker-note[
+]
+
+== 王子の良いところ
+- 飯に困らない
+- 電車路線がRAIDしているためダイヤの乱れに強い
+- 娯楽施設がそこそこある
+
+#speaker-note[
+]
+
+== 飯に困らない
+- 大抵の大手チェーン店がある
+- ラーメン屋が近所に5軒くらいある
+- バーキンはない
+- まいばすと東部ストアがあるため人間的な食生活を送れる
+
+#speaker-note[
+]
+
+== 電車が便利
+- 3路線あるためどれかが死んでも都心に出れる
+- 京浜東北線が運休した時でもメトロで無事出社できた
+- 日暮里乗り換えで空港アクセスもしやすい
+- Kアリーナまで乗り換えなしで行けるの便利
+- 昼間の快速を使えば15分で秋葉原に行ける
+- 都内のどこからでも帰れる
+
+#speaker-note[
+]
+
+== 娯楽施設がそこそこある
+- サンスクエアに全てが集約されている
+- 退勤がてらツアマスできるの最高
+- ボウリングとバッティングもできるが行ったことはない
+- 再開発で取り壊されるらしいので悲しい...
+- 娯楽と言って良いか分からないがネカフェも複数ある
+- 駅前に大きな公園もあり自然も感じられる
+
+== 温泉とサウナがわりとある
+- かが浴場めちゃくちゃ良い
+- サウナに関しては駅近くに数カ所あったりする
+- 今日は温泉にするか〜という選択がわりとしやすい
+
+== 治安
+- 学校が多く家族連れも多いので治安が良い
+- 駅前に交番があるので安心感がある
+- 住み初めてから治安の悪そうな出来事は起きていない
+
+== 気になる点
+- よく八王子と誤解される
+- 池袋・新宿方面に出づらい
+
+== まとめ
+- 王子は都心へのアクセスもしやすく便利
+- それでいて住みやすくバランスが取れた街
+- 次に住む街に王子、どうですか？
