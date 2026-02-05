@@ -62,7 +62,7 @@
               owner = "google";
               repo = "fonts";
               rev = "main";
-              hash = "sha256-Ap3fjh6yGkI0oP8BqG6wOB0aLFbAuHRNt/Z9fp2v3mw=";
+              hash = "sha256-DgEtkjK3eUgjHLT3FUdNF/VRrMgO79TFEayQoWMLGdI=";
             };
 
             typixLib = typix.lib.${system};
