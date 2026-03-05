@@ -125,6 +125,7 @@
                 tinymist
                 gum
                 just
+                pympress
               ];
 
               fontPaths = [
