@@ -32,3 +32,13 @@ watch:
     echo "Error: No presentation name provided"
     exit 1
   fi
+
+present:
+  #!/usr/bin/env bash
+  NAME=$(fd . ./org/ --max-depth 1 | gum filter)
+  if [ -n "$NAME" ]; then
+    pympress "$NAME/main.pdf"
+  else
+    echo "Error: No presentation name provided"
+    exit 1
+  fi
