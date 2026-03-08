@@ -17,7 +17,7 @@
       total-slides: 9,
       primary: unnamed-blue,
       // pympress用のスピーカーノートを生成
-      config-common(show-notes-on-second-screen: right),
+      // config-common(show-notes-on-second-screen: right),
   )
 
   #let icode(name) = text(fill: faff-pink, raw(block: false, name.text))
