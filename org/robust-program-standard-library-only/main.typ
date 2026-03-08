@@ -8,7 +8,7 @@
     total-slides: 9,
     primary: unnamed-blue,
     // pympress用のスピーカーノートを生成
-    // config-common(show-notes-on-second-screen: right),
+    config-common(show-notes-on-second-screen: right),
 )
 
 #let icode(name) = text(fill: faff-pink, raw(block: false, name.text))
@@ -61,8 +61,11 @@
 - 最初に触った言語がPython
 - 今はPythonで飯を食べている
 - 最近はスマホに篠澤広を住まわせてる
+- 親がPythonで育ての親はNimとGo 
+- 一番記憶に残っているコードのミスは`int(input)`()
 
 #speaker-note[
+  3時間溶かした
 ]
 
 #focus-slide[ 
@@ -101,12 +104,109 @@
       - コードはコピペすることにしたのでVSCodeは使える
       - 組み込みのPylanceで型チェックは効く 
       - Python 3.11(typingは一式使える)
-
-      とりあえず最低限型ヒントを書く環境はある
+      とりあえず最低限型ヒントを書ける環境はある
   ]
 ]
 
 #speaker-note[
 ]
 
+== とりあえず型ヒントを書きまくる
+
+#align()[
+  #align()[
+      全ての値に型ヒントを付けまくる
+      - dataclass
+      - typing
+      - list
+      - tuple
+  ]
+]
+
+== 標準ライブラリにあるデータ構造
+  #align()[
+    #align()[
+        - collections
+        - array
+    ]
+  ]
+
+#speaker-note[
+  今回は使わなかったが標準で便利なデータ構造がある
+  arrayは最近知った
+]
+
+== collections
+
+#align()[
+  #text(size: 19pt)[
+      - namedtuple:\
+      名前付きフィールドを持つタプルのサブクラスを作成するファクトリ関数
+      - deque:\
+      両端における append や pop を高速に行えるリスト風のコンテナ
+      - ChainMap:\
+      複数のマッピングの一つのビューを作成する辞書風のクラス
+      - Counter:\
+      ハッシュ可能 なオブジェクトを数え上げる辞書のサブクラス
+  ]
+]
+
+== collections
+
+#align()[
+  #text(size: 19pt)[
+      - OrderedDict:\
+      項目が追加された順序を記憶する辞書のサブクラス
+      - defaultdict:\
+      ファクトリ関数を呼び出して存在しない値を供給する辞書のサブクラス
+      - UserDict:\
+      辞書のサブクラス化を簡単にする辞書オブジェクトのラッパ
+      - UserList:\
+      リストのサブクラス化を簡単にするリストオブジェクトのラッパ
+      - UserString:\
+      文字列のサブクラス化を簡単にする文字列オブジェクトのラッパ
+  ]
+]
+
+#speaker-note[
+    collectionsの詳細はFluent Pythonが詳しい
+]
+
+== データ構造だけでも戦えそう
+
+#align(center)[
+  #align(horizon)[
+      #text(size: 1.5em)[データ構造 + アルゴリズム = プログラム]
+  ]
+]
+
+== 堅牢は型だけじゃない
+
+#align()[
+  #text()[    
+      - 適切なデータ構造の選択
+      - データ構造に合ったアルゴリズムの実装
+      - もちろん型ヒントも大事
+  ]
+]
+
+#focus-slide[
+  #text("堅牢なプログラムは堅牢なデータ構造から", fill: white, size: 0.9em)
+]
+
+== なんとか完成
+
+#align()[
+  #align()[
+      自分: スクリプト完成しました。\
+      上司: 良い感じだね。
+      自分: うす\
+      上司: 疑問に思ってたけど、なんでわざわざクラス使ってるの？\
+  ]
+]
+
 == まとめ
+-  堅牢さの担保に型は重要
+- でも堅牢は型ありきじゃない
+- 正しいデータ型と型ヒントで堅牢を実現しよう
+- 就職先はちゃんと考えて決めよう
